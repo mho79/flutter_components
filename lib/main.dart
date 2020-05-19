@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
-import 'package:flutterapp/theme.dart';
+import 'package:fluttercomponents/theme.dart';
 
 void main() {
     runApp(MaterialApp(
@@ -95,7 +95,7 @@ class FilterLayout extends StatelessWidget {
                         color: RelovedColors.black.withOpacity(0.2),
                     ),
                     Container(
-                        padding: EdgeInsets.fromLTRB(21.0, 14.0, 6.0, 21.0),
+                        padding: EdgeInsets.fromLTRB(21.0, 14.0, 21.0, 21.0),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -108,22 +108,33 @@ class FilterLayout extends StatelessWidget {
                                                 style: RelovedTypography.headline3,
                                             ),
                                         ),
-                                        FlatButton(
-                                            child: Text(
-                                                'See list',
-                                                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                                                    color: RelovedColors.pinkRed,
-                                                    decoration: TextDecoration.underline,
-                                                    fontWeight: FontWeight.w700
+                                        ButtonTheme(
+                                            padding: EdgeInsets.all(0),
+                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            minWidth: 0,
+                                            height: 0,
+                                            child: FlatButton(
+                                                onPressed: () => print('see brand list'),
+                                                child: Text(
+                                                    'See list',
+                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                                        color: RelovedColors.pinkRed,
+                                                        decoration: TextDecoration.underline,
+                                                        fontWeight: FontWeight.w700
+                                                    ),
                                                 ),
                                             ),
                                         ),
                                     ],
                                 ),
+                                SizedBox(height: 14.0),
                                 Container(
-                                    padding: EdgeInsets.only(right: 16.0),
                                     child: TextField(
                                         decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 14.0),
+                                            fillColor: RelovedColors.iceBlue,
+                                            filled: true,
                                             hintText: 'Brand Search',
                                         ),
                                     ),
