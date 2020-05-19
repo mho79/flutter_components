@@ -37,9 +37,11 @@ class RelovedTheme {
                 color: colorScheme.primary,
                 textTheme: _textTheme.apply(bodyColor: colorScheme.onPrimary),
                 iconTheme: IconThemeData(color: colorScheme.onPrimary),
-                actionsIconTheme: IconThemeData(color: colorScheme.onPrimary),
-                elevation: 1.0,
+                actionsIconTheme: IconThemeData(color: colorScheme.onPrimary)
             ),
+            iconTheme: IconThemeData(
+                color: RelovedColors.anthracite
+            )
         );
     }
 
