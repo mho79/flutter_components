@@ -46,10 +46,10 @@ class FilterLayout extends StatelessWidget {
             // body is the majority of the screen.
             body: ListView(
                 children:  <Widget>[
-                    Container(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Theme(
-                            data: _expansionTileTheme,
+                   Theme(
+                        data: _expansionTileTheme,
+                        child: ListTileTheme(
+                            contentPadding: EdgeInsets.fromLTRB(21.0, 10.0, 23.0, 10.0),
                             child: ExpansionTile(
                                 title: Text(
                                     'Color',
@@ -58,7 +58,7 @@ class FilterLayout extends StatelessWidget {
                                 onExpansionChanged: (bool expanding) => print('expanding: '+expanding.toString()),
                                 children: <Widget>[
                                     Container(
-                                        height: 124,
+                                        height: 125,
                                         child: _buildColorsList(),
                                     ),
                                 ],
@@ -70,10 +70,10 @@ class FilterLayout extends StatelessWidget {
                         thickness: 1.0,
                         color: RelovedColors.black.withOpacity(0.2),
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Theme(
-                            data: _expansionTileTheme,
+                    Theme(
+                        data: _expansionTileTheme,
+                        child: ListTileTheme(
+                            contentPadding: EdgeInsets.fromLTRB(21.0, 10.0, 23.0, 10.0),
                             child: ExpansionTile(
                                 title: Text(
                                     'Size',
@@ -95,7 +95,7 @@ class FilterLayout extends StatelessWidget {
                         color: RelovedColors.black.withOpacity(0.2),
                     ),
                     Container(
-                        padding: EdgeInsets.fromLTRB(21.0, 14.0, 21.0, 21.0),
+                        padding: EdgeInsets.fromLTRB(21.0, 28.0, 21.0, 28.0),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -127,7 +127,7 @@ class FilterLayout extends StatelessWidget {
                                         ),
                                     ],
                                 ),
-                                SizedBox(height: 14.0),
+                                SizedBox(height: 28.0),
                                 Container(
                                     child: TextField(
                                         decoration: InputDecoration(
@@ -147,10 +147,10 @@ class FilterLayout extends StatelessWidget {
                         thickness: 1.0,
                         color: RelovedColors.black.withOpacity(0.2),
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Theme(
-                            data: _expansionTileTheme,
+                    Theme(
+                        data: _expansionTileTheme,
+                        child: ListTileTheme(
+                            contentPadding: EdgeInsets.fromLTRB(21.0, 10.0, 23.0, 10.0),
                             child: ExpansionTile(
                                 title: Text(
                                     'Material',
@@ -171,10 +171,10 @@ class FilterLayout extends StatelessWidget {
                         thickness: 1.0,
                         color: RelovedColors.black.withOpacity(0.2),
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Theme(
-                            data: _expansionTileTheme,
+                    Theme(
+                        data: _expansionTileTheme,
+                        child: ListTileTheme(
+                            contentPadding: EdgeInsets.fromLTRB(21.0, 10.0, 23.0, 10.0),
                             child: ExpansionTile(
                                 title: Text(
                                     'Condition',
@@ -189,6 +189,11 @@ class FilterLayout extends StatelessWidget {
                                 ],
                             ),
                         ),
+                    ),
+                    Divider(
+                        height: 1.0,
+                        thickness: 1.0,
+                        color: RelovedColors.black.withOpacity(0.2),
                     ),
                     Container(
                         margin: EdgeInsets.all(21.0),
@@ -209,74 +214,99 @@ class FilterLayout extends StatelessWidget {
 }
 
 Widget _buildColorsList() {
-    return ListView.builder(
+    final int itemCount = 10;
+    return ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(14.0),
-        itemBuilder: (context, i) {
-            if (i >= 10) {
+        padding: EdgeInsets.only(left: 21.0, right: 23.0, bottom: 29.0),
+        itemBuilder: (BuildContext context, int index) {
+            if (index >= itemCount) {
                 return null;
             }
             return _buildColors();
-        });
+        },
+        separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+                width: 14.0,
+            );
+        },
+        itemCount: itemCount,
+    );
 }
 
 Widget _buildColors() {
     RandomColor _randomColor = RandomColor();
     final color = _randomColor.randomColor();
-    return FlatButton(
-        padding: EdgeInsets.all(0.0),
-        onPressed: () => print('selected color: '+color.toString()),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-                Container(
-                    width: 72.0,
-                    height: 72.0,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: RelovedColors.veryLightPink),
-                        shape: BoxShape.circle,
-                        color: color,
+    return ButtonTheme(
+        padding: EdgeInsets.all(0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minWidth: 0,
+        height: 0,
+        child: FlatButton(
+            onPressed: () => print('selected color: '+color.toString()),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                    Container(
+                        width: 72.0,
+                        height: 72.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: RelovedColors.veryLightPink),
+                            shape: BoxShape.circle,
+                            color: color,
+                        ),
                     ),
-                ),
-                SizedBox(height: 10.0),
-                Text(
-                    'Color',
-                    style: RelovedTypography.filterText
-                ),
-            ],
+                    SizedBox(height: 10.0),
+                    Text(
+                        'Color',
+                        style: RelovedTypography.filterText
+                    ),
+                ],
+            ),
         ),
     );
 }
 
 Widget _buildSizesList() {
     final sizes = [32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58];
-    return ListView.builder(
+    return ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(14.0),
-        itemBuilder: (context, i) {
-            if (i >= sizes.length) {
+        padding: EdgeInsets.only(left: 21.0, right: 23.0, bottom: 29.0),
+        itemBuilder: (BuildContext context, int index) {
+            if (index >= sizes.length) {
                 return null;
             }
-            return _buildSizes(context, sizes[i]);
-        });
+            return _buildSizes(context, sizes[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+                width: 14.0,
+            );
+        },
+        itemCount: sizes.length,
+    );
 }
 
 Widget _buildSizes(context, size) {
-    return FlatButton(
-        padding: EdgeInsets.all(0.0),
-        onPressed: () => print('selected size: '+size.toString()),
-        child: Container(
-            width: 72.0,
-            height: 72.0,
-            decoration: BoxDecoration(
-                border: Border.all(color: RelovedColors.veryLightPink),
-                shape: BoxShape.circle,
-            ),
-            child: Center(
-                child: Text(
-                    size.toString(),
-                    style: Theme.of(context).textTheme.button.copyWith(color: RelovedColors.anthracite)
-                )
+    return ButtonTheme(
+        padding: EdgeInsets.all(0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minWidth: 0,
+        height: 0,
+        child: FlatButton(
+            onPressed: () => print('selected size: '+size.toString()),
+            child: Container(
+                width: 72.0,
+                height: 72.0,
+                decoration: BoxDecoration(
+                    border: Border.all(color: RelovedColors.veryLightPink),
+                    shape: BoxShape.circle,
+                ),
+                child: Center(
+                    child: Text(
+                        size.toString(),
+                        style: Theme.of(context).textTheme.button.copyWith(color: RelovedColors.anthracite)
+                    )
+                ),
             ),
         ),
     );
@@ -284,33 +314,44 @@ Widget _buildSizes(context, size) {
 
 Widget _buildMaterialList() {
     final materials = ['denim','cotton','leather','polyester','rayon'];
-    return ListView.builder(
+    return ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(14.0),
-        itemBuilder: (context, i) {
-            if (i >= materials.length) {
+        padding: EdgeInsets.only(left: 21.0, right: 23.0, bottom: 29.0),
+        itemBuilder: (BuildContext context, int index) {
+            if (index >= materials.length) {
                 return null;
             }
-            return _buildMaterials(context, materials[i]);
-        });
+            return _buildMaterials(context, materials[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+                width: 14.0,
+            );
+        },
+        itemCount: materials.length,
+    );
 }
 
 Widget _buildMaterials(context, material) {
-    return FlatButton(
-        onPressed: () => print('selected material: '+material.toString()),
-        padding: EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Container(
-            height: 35.0,
-            padding: EdgeInsets.fromLTRB(21.0, 8, 21.0, 8),
-            decoration: BoxDecoration(
-                border: Border.all(color: RelovedColors.veryLightPink),
-                borderRadius: BorderRadius.circular(22),
-            ),
-            child: Center(
-                child: Text(
-                    material.toString().toUpperCase(),
-                    style: RelovedTypography.filterText
-                )
+    return ButtonTheme(
+        padding: EdgeInsets.all(0.0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minWidth: 0,
+        height: 35.0,
+        child: FlatButton(
+            onPressed: () => print('selected material: '+material.toString()),
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 21.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: RelovedColors.veryLightPink),
+                    borderRadius: BorderRadius.circular(22),
+                ),
+                child: Center(
+                    child: Text(
+                        material.toString().toUpperCase(),
+                        style: RelovedTypography.filterText
+                    )
+                ),
             ),
         ),
     );
@@ -318,33 +359,44 @@ Widget _buildMaterials(context, material) {
 
 Widget _buildConditionList() {
     final conditions = ['new with label','new without label','excellent','good','with flaws'];
-    return ListView.builder(
+    return ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(14.0),
-        itemBuilder: (context, i) {
-            if (i >= conditions.length) {
+        padding: EdgeInsets.only(left: 21.0, right: 23.0, bottom: 29.0),
+        itemBuilder: (BuildContext context, int index) {
+            if (index >= conditions.length) {
                 return null;
             }
-            return _buildConditions(context, conditions[i]);
-        });
+            return _buildConditions(context, conditions[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+                width: 14.0,
+            );
+        },
+        itemCount: conditions.length,
+    );
 }
 
 Widget _buildConditions(context, material) {
-    return FlatButton(
-        onPressed: () => print('selected material: '+material.toString()),
-        padding: EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Container(
-            height: 35.0,
-            padding: EdgeInsets.fromLTRB(21.0, 8, 21.0, 8),
-            decoration: BoxDecoration(
-                border: Border.all(color: RelovedColors.veryLightPink),
-                borderRadius: BorderRadius.circular(22),
-            ),
-            child: Center(
-                child: Text(
-                    material.toString().toUpperCase(),
-                    style: RelovedTypography.filterText
-                )
+    return ButtonTheme(
+        padding: EdgeInsets.all(0.0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minWidth: 0,
+        height: 35.0,
+        child: FlatButton(
+            onPressed: () => print('selected condition: '+material.toString()),
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 21.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: RelovedColors.veryLightPink),
+                    borderRadius: BorderRadius.circular(22),
+                ),
+                child: Center(
+                    child: Text(
+                        material.toString().toUpperCase(),
+                        style: RelovedTypography.filterText
+                    )
+                ),
             ),
         ),
     );
